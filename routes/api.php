@@ -28,3 +28,11 @@ Route::put('/polls/{poll}', 'PollsController@update');
 Route::delete('/polls/{poll}', 'PollsController@delete');
 
 Route::any('/errors', 'PollsController@errors');
+
+// using resource - quicker way to create BREAD operations
+
+Route::apiResource('questions', 'QuestionsController');
+
+// Managing sub resources - questions related to a poll
+
+Route::get('/polls/{poll}/questions', 'PollsController@questions');

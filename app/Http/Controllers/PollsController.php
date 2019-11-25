@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Poll;
+use App\Http\Resources\Poll as PollResource;
 
 use Illuminate\Http\Request;
 use Validator;
@@ -23,7 +24,9 @@ class PollsController extends Controller
         if(is_null($poll))
             return response()->json(null, 404);
 
-        return response()->json(Poll::findOrFail($id), 200); // find changed to findOrFail to get the standard 404 error page from Laravel if the resource does not exist
+        $response = new PollResource(Poll::findOrFail($id)); // get the poll, transform the poll using the resource class and store it in the response variable
+
+        return response()->json($response, 200); // find changed to findOrFail to get the standard 404 error page from Laravel if the resource does not exist
     }
 
     public function store(Request $request) {
@@ -58,5 +61,11 @@ class PollsController extends Controller
 
     public function errors() {
         return response()->json(['msg' => 'Payment is required!'], 501);
+    }
+
+    public function questions(Request $request, Poll $poll) {
+        $questions = $poll->questions;
+
+        return response()->json($questions, 200); // if you have no relationships defined you will get an empty response
     }
 }
