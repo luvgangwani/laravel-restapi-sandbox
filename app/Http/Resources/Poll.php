@@ -14,9 +14,9 @@ class Poll extends JsonResource
      */
     public function toArray($request)
     {
-        // return parent::toArray($request);
-        return [
+        return parent::toArray($request);
+        /* return [
             'title' => mb_strimwidth($this->title, 0, 5, '...'),
-        ];
+        ]; */
     }
 }

@@ -36,3 +36,7 @@ Route::apiResource('questions', 'QuestionsController');
 // Managing sub resources - questions related to a poll
 
 Route::get('/polls/{poll}/questions', 'PollsController@questions');
+
+Route::get('/files/get', 'FilesController@show');
+
+Route::post('/files/create', 'FilesController@create');

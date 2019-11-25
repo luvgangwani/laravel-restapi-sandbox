@@ -12,19 +12,23 @@ class PollsController extends Controller
 {
     //
     public function index() {
-        return response()->json(Poll::get(), 200);
+        return response()->json(Poll::paginate(1), 200);
     }
 
     public function show($id) {
 
         /* Overriding Laravel's 404 response to get a custom response */
 
-        $poll = Poll::find($id);
+       /*  $poll = Poll::find($id);
 
         if(is_null($poll))
-            return response()->json(null, 404);
+            return response()->json(null, 404); */
 
-        $response = new PollResource(Poll::findOrFail($id)); // get the poll, transform the poll using the resource class and store it in the response variable
+        $poll = Poll::with('questions')->findOrFail($id);
+        $response['poll'] = $poll;
+        $response['questions'] = $poll->questions;
+
+        $response = new PollResource($response); // get the poll, transform the poll using the resource class and store it in the response variable // with('questions') return nested data
 
         return response()->json($response, 200); // find changed to findOrFail to get the standard 404 error page from Laravel if the resource does not exist
     }
