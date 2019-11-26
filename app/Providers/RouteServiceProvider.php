@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Laravel\Passport\Passport;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         //
+
+        Passport::routes();
     }
 
     /**
